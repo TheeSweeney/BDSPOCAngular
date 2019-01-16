@@ -1,0 +1,21 @@
+{
+  "name": "bds-ui",
+  "version": "1.0.0",
+  "description": "UI to demo Blockchain Document Store",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node main.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.ibm.com:minehub/bds-ui.git"
+  },
+  "author": "Ethan Fox",
+  "license": "ISC",
+  "dependencies": {
+    "@angular/cli": "^7.2.1",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.2.2"
+  }
+}
