@@ -1,4 +1,4 @@
-<button class="btn btn-info">List All Documents</button>
+<button class="btn btn-info" (click)="getDocs()">List All Documents</button>
   <div id="documentList">
     <div *ngFor="let doc of docs">
       <h3>{{doc.fileName}}</h3>

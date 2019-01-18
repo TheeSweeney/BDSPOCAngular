@@ -12,4 +12,9 @@ export class DocUploadComponent implements OnInit {
   ngOnInit() {
   }
 
+  uploadFile = function(){
+    setTimeout(function(){
+      document.getElementById("uploadBtn").className = "btn btn-success"
+    }, 3000)
+  }
 }

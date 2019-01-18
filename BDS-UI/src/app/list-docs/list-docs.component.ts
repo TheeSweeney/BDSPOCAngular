@@ -15,4 +15,8 @@ export class ListDocsComponent implements OnInit {
   ngOnInit() {
   }
 
+  getDocs = function(){
+    
+  }
+
 }
