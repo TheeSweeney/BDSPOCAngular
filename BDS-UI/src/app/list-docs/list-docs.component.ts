@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { docs } from "./../data/docs";
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-list-docs',
@@ -8,15 +9,19 @@ import { docs } from "./../data/docs";
 })
 export class ListDocsComponent implements OnInit {
 
-  docs: Array<any> = docs;
+  docs: Array<any>;
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
+    this.getDocs();
   }
 
   getDocs = function(){
-    
+    this.http.get('http://localhost:4200/assets/data/docs.json')
+      .subscribe(
+        data => console.log(data)
+      )
   }
 
 }
