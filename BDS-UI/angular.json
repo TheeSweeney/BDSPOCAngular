@@ -4,7 +4,7 @@
   "newProjectRoot": "projects",
   "projects": {
     "BDS-UI": {
-      "root": "",
+      "root": "src",
       "sourceRoot": "src",
       "projectType": "application",
       "prefix": "app",
