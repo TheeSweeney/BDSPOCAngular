@@ -10,18 +10,20 @@ import { map } from 'rxjs/operators';
 export class ListDocsComponent implements OnInit {
 
   docs: Array<any>;
+  getURL = 'assets/data/docs.json';
+
 
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.getDocs();
   }
 
   getDocs = function(){
-    this.http.get('http://localhost:4200/assets/data/docs.json')
-      .subscribe(
-        data => console.log(data)
-      )
+    console.log('yo')
+    this.http.get(this.getURL).subscribe(
+      (file)=>{
+            console.log('file: ', typeof file, " - ", file);
+       })
   }
 
 }

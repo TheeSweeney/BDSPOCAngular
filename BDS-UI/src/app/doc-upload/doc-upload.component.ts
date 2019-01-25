@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError, retry } from 'rxjs/operators';
 
 @Component({
   selector: 'app-doc-upload',
@@ -10,17 +11,28 @@ export class DocUploadComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
 
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json',
+      'Authorization': 'my-auth-token'
+    })
+  };
+
+  postURL = 'assets/data/docs.json';
+
   ngOnInit() {
   }
 
   handleFileInput(files){
-     this.http.get('assets/data/docs.json').subscribe(
-      (file)=>{
-            console.log('file: ',file);
-       })
+     
   }
 
-  uploadFile = function(){
+  uploadFile = function(doc: any){
+    return this.http.post(this.postURL, doc, this.httpOptions)
+    .pipe(
+      catchError(this.handleError('addDoc: ', doc))
+    );
+
     setTimeout(function(){
       document.getElementById("uploadBtn").className = "btn btn-success"
     }, 3000)
