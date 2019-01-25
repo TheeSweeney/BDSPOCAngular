@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-doc-upload',
@@ -8,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DocUploadComponent implements OnInit {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
+  }
+
+  handleFileInput(files){
+     this.http.get('assets/data/docs.json').subscribe(
+      (file)=>{
+            console.log('file: ',file);
+       })
   }
 
   uploadFile = function(){
