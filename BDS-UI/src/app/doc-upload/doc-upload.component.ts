@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+import { apiKey }  from '../../assets/data/api_key';
 
 @Component({
   selector: 'app-doc-upload',
@@ -38,8 +39,16 @@ export class DocUploadComponent implements OnInit {
   };
 
   postURL = 'assets/data/docs.json';
+  postIAMTokenObj = {
+    'Content-type': 'application/x-www-form-urlencoded',
+    'grant_type': 'urn:ibm:params:oauth:grant-type:apikey',
+    'api_key': apiKey
+  }
+  console.log(apiKey)
 
   ngOnInit() {
+    console.log(apiKey)
+
   }
 
   handleFileInput(uploadDoc){
