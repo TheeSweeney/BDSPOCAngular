@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
-import { apiKey }  from '../../assets/data/api_key';
+import { apiKey, bearer }  from '../../assets/data/keys';
 
 @Component({
   selector: 'app-doc-upload',
@@ -13,6 +13,7 @@ export class DocUploadComponent implements OnInit {
 
   doc: any;
   docName: string;
+  fileToUpload: File;
 
   postIAMTokenObj = {
     'contentType': 'application/x-www-form-urlencoded',
@@ -21,8 +22,7 @@ export class DocUploadComponent implements OnInit {
     'api_key': apiKey
   }
 
-  postURL = 'https://pbsa-prod.us-south.containers.mybluemix.net/1eda687e-efe8-4ba1-a4e7-a8bfc295e139/docstore/v1/docstores/defaultchannel/documents/files/' + this.docName + '?document_type=json';
-
+  
   constructor(private http: HttpClient) { }
 
   private handleError(error: HttpErrorResponse) {
@@ -43,7 +43,8 @@ export class DocUploadComponent implements OnInit {
 
   httpOptions = {
     headers: new HttpHeaders({
-      'Accept':  this.postIAMTokenObj.accept,
+      'Accept': this.postIAMTokenObj.accept,
+      'Authorization': bearer
     })
   };
 
@@ -56,20 +57,32 @@ export class DocUploadComponent implements OnInit {
   ngOnInit() {
     console.log(this.httpOptions)
     console.log(this.httpBody)
-    console.log(this.postURL)
+    //console.log(this.postURL)
   }
-
-  handleFileInput(uploadDoc){
-    this.doc = uploadDoc
-    this.docName = uploadDoc[0].name
-    console.log(this.docName)
+ 
+  handleFileInput(files:FileList){
+    this.fileToUpload = files.item(0); 
+     this.doc = this.fileToUpload
+     this.docName = "test"
+   // console.log(this.docName)
   }
 
   uploadFile = function(){
-    return this.http.post(this.postURL, this.doc, this.httpOptions)
-    .pipe(
-      catchError(this.handleError('addDoc: ', this.doc))
-    );
+    let input = new FormData();
+    let postURL = 'https://pbsa-prod.us-south.containers.mybluemix.net/1eda687e-efe8-4ba1-a4e7-a8bfc295e139/docstore/v1/docstores/defaultchannel/documents/files/' + this.docName + '?document_type=json';
+
+    input.append('file',this.fileToUpload,this.fileToUpload.name);
+    return this.http.post(postURL, input,this.httpOptions)
+    .subscribe((val) =>{
+      if(val) {
+        console.log(val);
+      } else {
+        catchError(this.handleError('addDoc: ', this.doc))
+      }
+    });
+     // .pipe(
+      //catchError(this.handleError('addDoc: ', this.doc))
+    //);
     //fake color change to simulate success
     // setTimeout(function(){
     //   document.getElementById("uploadBtn").className = "btn btn-success"
