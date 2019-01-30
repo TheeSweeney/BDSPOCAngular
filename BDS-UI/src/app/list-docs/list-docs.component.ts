@@ -19,10 +19,9 @@ export class ListDocsComponent implements OnInit {
   }
 
   getDocs = function(){
-    console.log('yo')
     this.http.get(this.getURL).subscribe(
       (file)=>{
-            console.log('file: ', typeof file, " - ", file);
+            this.docs = file;
        })
   }
 
