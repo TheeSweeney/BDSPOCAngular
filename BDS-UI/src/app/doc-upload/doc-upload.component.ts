@@ -14,7 +14,7 @@ export class DocUploadComponent implements OnInit {
   doc: any;
   docName: string;
   fileToUpload: File;
-
+  postURL:string = 'https://pbsa-prod.us-south.containers.mybluemix.net/1eda687e-efe8-4ba1-a4e7-a8bfc295e139/docstore/v1/docstores/defaultchannel/documents/files/' + this.docName + '?document_type=json';
   postIAMTokenObj = {
     'contentType': 'application/x-www-form-urlencoded',
     'grantType': 'urn:ibm:params:oauth:grant-type:apikey',
@@ -53,33 +53,29 @@ export class DocUploadComponent implements OnInit {
     'apikey': apiKey
   }
 
-
   ngOnInit() {
-    console.log(this.httpOptions)
-    console.log(this.httpBody)
-    //console.log(this.postURL)
   }
  
   handleFileInput(files:FileList){
     this.fileToUpload = files.item(0); 
-     this.doc = this.fileToUpload
-     this.docName = "test"
-   // console.log(this.docName)
+    this.doc = this.fileToUpload
+    this.docName = "test"
   }
 
   uploadFile = function(){
     let input = new FormData();
-    let postURL = 'https://pbsa-prod.us-south.containers.mybluemix.net/1eda687e-efe8-4ba1-a4e7-a8bfc295e139/docstore/v1/docstores/defaultchannel/documents/files/' + this.docName + '?document_type=json';
 
-    input.append('file',this.fileToUpload,this.fileToUpload.name);
-    return this.http.post(postURL, input,this.httpOptions)
-    .subscribe((val) =>{
-      if(val) {
-        console.log(val);
-      } else {
-        catchError(this.handleError('addDoc: ', this.doc))
+    input.append('file',this.fileToUpload);
+
+    return this.http.post(this.postURL, input,this.httpOptions)
+      .subscribe((val) =>{
+        if(val) {
+         console.log(val);
+        } else {
+         catchError(this.handleError('addDoc: ', this.doc))
+        }
       }
-    });
+    );
      // .pipe(
       //catchError(this.handleError('addDoc: ', this.doc))
     //);
