@@ -51,9 +51,9 @@ export class DocUploadComponent implements OnInit {
     .pipe(
       catchError(this.handleError('addDoc: ', doc))
     );
-
-    setTimeout(function(){
-      document.getElementById("uploadBtn").className = "btn btn-success"
-    }, 3000)
+    //fake color change to simulate success
+    // setTimeout(function(){
+    //   document.getElementById("uploadBtn").className = "btn btn-success"
+    // }, 3000)
   }
 }
