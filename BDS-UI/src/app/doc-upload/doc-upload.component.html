@@ -2,6 +2,6 @@
   <input type="file"
            id="file"
            (change)="handleFileInput($event.target.files)">
-  <input type="text" placeholder="File Name"><br><!-- filename field should eventually update self to show current name of uploaded file-->
+  <input type="text" placeholder="{{docName}}"><br><!-- filename field should eventually update self to show current name of uploaded file-->
   <button id="uploadBtn" class="btn btn-primary" (click)="uploadFile()">Upload Document</button>
 </div>
