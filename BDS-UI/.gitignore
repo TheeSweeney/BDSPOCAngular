@@ -1,7 +1,10 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+<<<<<<< HEAD
 /src/assets
 
+=======
+>>>>>>> 35fdf1dac08856c9ca8d8d2aa79861957b5f479c
 # compiled output
 /dist
 /tmp
