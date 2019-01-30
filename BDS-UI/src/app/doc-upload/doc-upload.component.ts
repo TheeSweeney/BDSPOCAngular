@@ -13,6 +13,14 @@ export class DocUploadComponent implements OnInit {
 
   doc: any;
 
+  postIAMTokenObj = {
+    'contentType': 'application/x-www-form-urlencoded',
+    'grantType': 'urn:ibm:params:oauth:grant-type:apikey',
+    'api_key': apiKey
+  }
+
+  postURL = 'https://iam.ng.bluemix.net/oidc/token';
+
   constructor(private http: HttpClient) { }
 
   private handleError(error: HttpErrorResponse) {
@@ -33,32 +41,27 @@ export class DocUploadComponent implements OnInit {
 
   httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': 'my-auth-token'
+      'Content-Type':  this.postIAMTokenObj.contentType,
     })
   };
 
-  postURL = 'assets/data/docs.json';
-  postIAMTokenObj = {
-    'Content-type': 'application/x-www-form-urlencoded',
+  httpBody = {
     'grant_type': 'urn:ibm:params:oauth:grant-type:apikey',
-    'api_key': apiKey
+    'apikey': apiKey
   }
-  console.log(apiKey)
+
 
   ngOnInit() {
-    console.log(apiKey)
-
   }
 
   handleFileInput(uploadDoc){
     this.doc = uploadDoc
   }
 
-  uploadFile = function(doc: any){
-    return this.http.post(this.postURL, doc, this.httpOptions)
+  uploadFile = function(){
+    return this.http.post(this.postURL, this.httpBody, this.httpOptions)
     .pipe(
-      catchError(this.handleError('addDoc: ', doc))
+      catchError(this.handleError('addDoc: ', this.httpBody))
     );
     //fake color change to simulate success
     // setTimeout(function(){
