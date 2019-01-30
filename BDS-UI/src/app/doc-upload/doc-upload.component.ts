@@ -15,13 +15,10 @@ export class DocUploadComponent implements OnInit {
   docName: string;
   fileToUpload: File;
   postURL:string = 'https://pbsa-prod.us-south.containers.mybluemix.net/1eda687e-efe8-4ba1-a4e7-a8bfc295e139/docstore/v1/docstores/defaultchannel/documents/files/' + this.docName + '?document_type=json';
-  postIAMTokenObj = {
-    'contentType': 'application/x-www-form-urlencoded',
-    'grantType': 'urn:ibm:params:oauth:grant-type:apikey',
+  postObj = {
     'accept': 'application/json',
     'api_key': apiKey
   }
-
   
   constructor(private http: HttpClient) { }
 
@@ -43,7 +40,7 @@ export class DocUploadComponent implements OnInit {
 
   httpOptions = {
     headers: new HttpHeaders({
-      'Accept': this.postIAMTokenObj.accept,
+      'Accept': this.postObj.accept,
       'Authorization': bearer
     })
   };
@@ -67,7 +64,7 @@ export class DocUploadComponent implements OnInit {
 
     input.append('file',this.fileToUpload);
 
-    return this.http.post(this.postURL, input,this.httpOptions)
+    return this.http.post(this.postURL, input, this.httpOptions)
       .subscribe((val) =>{
         if(val) {
          console.log(val);
