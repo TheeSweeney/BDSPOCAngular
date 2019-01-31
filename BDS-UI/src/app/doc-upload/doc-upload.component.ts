@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { apiKey, bearer }  from '../../assets/data/keys';
 
@@ -16,8 +16,19 @@ export class DocUploadComponent implements OnInit {
   fileToUpload: File;
   postURL:string;
   postObj = {
-    'accept': 'application/json',
-    'api_key': apiKey
+    'accept': 'application/json'
+  }
+
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Accept': this.postObj.accept,
+      'Authorization': bearer
+    })
+  };
+
+  httpBody = {
+    'grant_type': 'urn:ibm:params:oauth:grant-type:apikey',
+    'apikey': apiKey
   }
   
   constructor(private http: HttpClient) { }
@@ -38,17 +49,6 @@ export class DocUploadComponent implements OnInit {
       'Something bad happened; please try again later.');
   };
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Accept': this.postObj.accept,
-      'Authorization': bearer
-    })
-  };
-
-  httpBody = {
-    'grant_type': 'urn:ibm:params:oauth:grant-type:apikey',
-    'apikey': apiKey
-  }
 
   ngOnInit() {
   }
@@ -78,8 +78,7 @@ export class DocUploadComponent implements OnInit {
         } else {
          catchError(this.handleError('addDoc: ', this.doc))
         }
-      }
-    );
+      });
      // .pipe(
       //catchError(this.handleError('addDoc: ', this.doc))
     //);

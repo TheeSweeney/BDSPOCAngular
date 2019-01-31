@@ -1,6 +1,6 @@
 <button class="btn btn-info" (click)="showDocs=true; getDocs();">List All Documents</button>
   <div *ngIf="showDocs" id="documentList">
     <div *ngFor="let doc of docs">
-      <h3>{{doc.fileName}}</h3>
+      <h3>{{doc.docId}}</h3>
     </div>
   </div>
