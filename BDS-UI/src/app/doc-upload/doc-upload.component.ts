@@ -55,7 +55,8 @@ export class DocUploadComponent implements OnInit {
  
   handleFileInput(files:FileList){
     this.fileToUpload = files.item(0); 
-    this.docName = "test"
+    console.log(files.item(0).name.split(".")[0])
+    this.docName = files.item(0).name.split(".")[0]
   }
 
   uploadFile = function(){
