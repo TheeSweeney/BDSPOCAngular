@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { apiKey, bearer }  from '../../assets/data/keys';
+import { bearer }  from '../../assets/data/keys';
 
 
 @Component({

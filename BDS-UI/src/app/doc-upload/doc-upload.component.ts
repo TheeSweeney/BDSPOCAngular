@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
-import { apiKey, bearer }  from '../../assets/data/keys';
+import { bearer }  from '../../assets/data/keys';
 
 @Component({
   selector: 'app-doc-upload',
@@ -25,11 +25,6 @@ export class DocUploadComponent implements OnInit {
       'Authorization': bearer
     })
   };
-
-  httpBody = {
-    'grant_type': 'urn:ibm:params:oauth:grant-type:apikey',
-    'apikey': apiKey
-  }
   
   constructor(private http: HttpClient) { }
 
@@ -56,10 +51,9 @@ export class DocUploadComponent implements OnInit {
   handleFileInput(files:FileList){
     this.fileToUpload = files.item(0); 
     
-    this.docName = files.item(0).name.split(".")[0].replace(/\s/g,'')
+    this.docName = files.item(0).name.split(".")[0].replace(/[^a-zA-Z0-9]/g, '');
 
     this.postURL  = '/v1/docstores/defaultchannel/documents/files/' + this.docName + '?document_type=json';
-    console.log(this.docName)
   }
 
   renameFile(name:string){
@@ -74,17 +68,10 @@ export class DocUploadComponent implements OnInit {
     return this.http.post(this.postURL, input, this.httpOptions)
       .subscribe((val) =>{
         if(val) {
-         console.log(val);
+          document.getElementById("uploadBtn").className = "btn btn-success";
         } else {
          catchError(this.handleError('addDoc: ', this.doc))
         }
       });
-     // .pipe(
-      //catchError(this.handleError('addDoc: ', this.doc))
-    //);
-    //fake color change to simulate success
-    // setTimeout(function(){
-    //   document.getElementById("uploadBtn").className = "btn btn-success"
-    // }, 3000)
   }
 }
