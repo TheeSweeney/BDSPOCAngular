@@ -14,7 +14,7 @@ export class DocUploadComponent implements OnInit {
   doc: any;
   docName: string;
   fileToUpload: File;
-  postURL:string = '/v1/docstores/defaultchannel/documents/files/' + this.docName + '?document_type=json';
+  postURL:string;
   postObj = {
     'accept': 'application/json',
     'api_key': apiKey
@@ -55,8 +55,15 @@ export class DocUploadComponent implements OnInit {
  
   handleFileInput(files:FileList){
     this.fileToUpload = files.item(0); 
-    console.log(files.item(0).name.split(".")[0])
-    this.docName = files.item(0).name.split(".")[0]
+    
+    this.docName = files.item(0).name.split(".")[0].replace(/\s/g,'')
+
+    this.postURL  = '/v1/docstores/defaultchannel/documents/files/' + this.docName + '?document_type=json';
+    console.log(this.docName)
+  }
+
+  renameFile(name:string){
+    this.docName = name.replace(/\s/g,'')
   }
 
   uploadFile = function(){
