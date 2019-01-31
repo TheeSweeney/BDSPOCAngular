@@ -1,0 +1,8 @@
+{
+    "/v1/*": {
+        "target": "https://pbsa-prod.us-south.containers.mybluemix.net/1eda687e-efe8-4ba1-a4e7-a8bfc295e139/docstore",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true
+    }
+}

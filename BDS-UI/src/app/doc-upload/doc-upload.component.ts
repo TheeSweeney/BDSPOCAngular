@@ -14,7 +14,7 @@ export class DocUploadComponent implements OnInit {
   doc: any;
   docName: string;
   fileToUpload: File;
-  postURL:string = 'https://pbsa-prod.us-south.containers.mybluemix.net/1eda687e-efe8-4ba1-a4e7-a8bfc295e139/docstore/v1/docstores/defaultchannel/documents/files/' + this.docName + '?document_type=json';
+  postURL:string = '/v1/docstores/defaultchannel/documents/files/' + this.docName + '?document_type=json';
   postObj = {
     'accept': 'application/json',
     'api_key': apiKey
