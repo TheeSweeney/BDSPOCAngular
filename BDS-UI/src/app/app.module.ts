@@ -6,13 +6,15 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { DocUploadComponent } from './doc-upload/doc-upload.component';
 import { ListDocsComponent } from './list-docs/list-docs.component';
+import { TokenRefreshComponent } from './token-refresh/token-refresh.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DocUploadComponent,
     ListDocsComponent,
-    FileSelectDirective
+    FileSelectDirective,
+    TokenRefreshComponent
   ],
   imports: [
     BrowserModule,
