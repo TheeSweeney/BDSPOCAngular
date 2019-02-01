@@ -66,7 +66,7 @@ export class DocUploadComponent implements OnInit {
     input.append('file',this.fileToUpload);
 
     return this.http.post(this.postURL, input, this.httpOptions)
-      .subscribe((val) =>{
+      .subscribe((val) => {
         if(val) {
           document.getElementById("uploadBtn").className = "btn btn-success";
         } else {

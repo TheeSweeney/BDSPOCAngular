@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { bearer }  from '../../assets/data/keys';
 
 
@@ -53,8 +53,12 @@ export class ListDocsComponent implements OnInit {
 
   getDocs = function(){
     return this.http.post(this.postURL, this.searchCriteria, this.httpOptions)
-      .subscribe((list)=>{
-        this.docs = list.response;
+      .subscribe((list) => {
+        if(list){
+          this.docs = list.response;
+        } else {
+          catchError(this.handleError('addDoc: ', this.doc))
+        }
       }
     )
   }
